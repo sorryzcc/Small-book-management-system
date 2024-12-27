@@ -37,7 +37,7 @@ app.get('/', function (request, response) {
     // 读取模板文件
     fs.readFile('book-list.html', 'utf8', function (error, data) {
         // 执行SQL语句
-        connection.query('SELECT * FROM websites', function (error, results) {
+        connection.query('SELECT * FROM users', function (error, results) {
             // 响应信息
             response.send(ejs.render(data, {
                 data: results
@@ -48,7 +48,7 @@ app.get('/', function (request, response) {
 //删除数据
 app.get('/delete/:id', function (request, response) {
     // 执行SQL语句
-    connection.query('DELETE FROM websites WHERE id=?', [request.params.id], function () {
+    connection.query('DELETE FROM users WHERE id=?', [request.params.id], function () {
         // 响应信息
         response.redirect('/');
     });
@@ -66,7 +66,7 @@ app.post('/insert', function (request, response) {
     // 声明body
     var body = request.body;
     // 执行SQL语句
-    connection.query('INSERT INTO websites (name, url, country) VALUES (?, ?, ?)', [
+    connection.query('INSERT INTO users (name, url, country) VALUES (?, ?, ?)', [
         body.name, body.url, body.country
     ], function () {
         // 响应信息
@@ -78,7 +78,7 @@ app.get('/edit/:id', function (request, response) {
     // 读取模板文件
     fs.readFile('book-edit.html', 'utf8', function (error, data) {
         // 执行SQL语句
-        connection.query('SELECT * FROM websites WHERE id = ?', [
+        connection.query('SELECT * FROM users WHERE id = ?', [
             request.params.id
         ], function (error, result) {
             // 响应信息
@@ -93,7 +93,7 @@ app.post('/edit/:id', function (request, response) {
     // 声明body
     var body = request.body;
     // 执行SQL语句
-    connection.query('UPDATE websites SET name=?, url=?, country=? WHERE id=?', [body.name, body.url, body.country, request.params.id], function () {
+    connection.query('UPDATE users SET name=?, url=?, country=? WHERE id=?', [body.name, body.url, body.country, request.params.id], function () {
         // 响应信息
         response.redirect('/');
     });
